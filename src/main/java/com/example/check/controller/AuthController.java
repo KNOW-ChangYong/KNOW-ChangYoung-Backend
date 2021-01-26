@@ -1,19 +1,16 @@
-package com.example.check.controller.attendance;
+package com.example.check.controller;
 
-import com.example.check.payload.AuthRequest;
-import com.example.check.payload.AuthResponse;
-import com.example.check.payload.RefreshTokenResponse;
+import com.example.check.payload.request.AuthRequest;
+import com.example.check.payload.response.AuthResponse;
+import com.example.check.payload.response.RefreshTokenResponse;
 import com.example.check.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
 @Service
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;

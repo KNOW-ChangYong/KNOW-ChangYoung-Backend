@@ -1,6 +1,5 @@
-package com.example.check.payload;
+package com.example.check.payload.request;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthRequest {
+public class AttendanceRequest {
 
-    @NotNull
-    private String id;
+    private String userId;
 
 }
