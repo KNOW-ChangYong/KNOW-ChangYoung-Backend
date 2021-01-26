@@ -40,6 +40,7 @@ dependencies {
 
 	// spring security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
 
 	// Database
 	compile("org.springframework.boot:spring-boot-starter-data-jpa")

@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    generate-ddl: true
+    database: mysql
+auth:
+  jwt:
+    secret: ${SECRET_KEY}
+    exp:
+      access: ${JWT_ACCESS_TOKEN_EXP}
+      refresh: ${JWT_REFRESH_TOKEN_EXP}
+    header: ${JWT_HEADER}
+    prefix: ${JWT_PREFIX}
+#    hibernate:
+#      ddl-auto: update
+
