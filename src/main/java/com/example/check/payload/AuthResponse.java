@@ -1,4 +1,4 @@
-package com.example.check.payload.auth;
+package com.example.check.payload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
