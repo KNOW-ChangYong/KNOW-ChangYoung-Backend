@@ -22,15 +22,9 @@ public class AttendanceController {
         attendanceService.createAttendance(request);
     }
 
-    @GetMapping
-    public List<AttendanceResponse> getAttendanceList() {
-        attendanceService.getAttendanceList();
-    }
-
     @GetMapping("/{date}")
     public List<AttendanceResponse> getTodayAttendance(@PathVariable LocalDate date){
-        attendanceService.getTodayAttendanceList(date);
-
+        return attendanceService.getTodayAttendanceList(date);
     }
 
 }

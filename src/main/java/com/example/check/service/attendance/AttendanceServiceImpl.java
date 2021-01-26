@@ -70,7 +70,7 @@ public class AttendanceServiceImpl implements AttendanceService{
         List<Attendance> attendanceList = attendanceRepository.findAllByDateTimeBetween(
             LocalDateTime.of(date.getYear(),date.getMonth(),date.getDayOfMonth(), 6,0),
             LocalDateTime.of(date.getYear(),date.getMonth(),date.getDayOfMonth(), 8,2));
-        
+
         List<AttendanceResponse> attendanceResponses = new ArrayList<>();
 
         for(Attendance attendance : attendanceList) {
