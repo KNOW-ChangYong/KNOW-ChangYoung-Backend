@@ -4,15 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Indexed;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RefreshToken {
+@Entity
+public class RefreshToken implements Serializable {
 
     @Id
     private String id;

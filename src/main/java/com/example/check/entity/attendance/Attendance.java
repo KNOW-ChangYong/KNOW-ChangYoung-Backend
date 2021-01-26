@@ -2,17 +2,17 @@ package com.example.check.entity.attendance;
 
 import com.example.check.entity.student.Student;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
 @Builder
-@NoArgsConstructor
+@Getter
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
 @Table(name = "attendance_tbl")

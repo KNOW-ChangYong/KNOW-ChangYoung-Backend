@@ -7,6 +7,8 @@ spring:
   jpa:
     generate-ddl: true
     database: mysql
+    hibernate:
+      ddl-auto: update
 auth:
   jwt:
     secret: ${SECRET_KEY}
@@ -15,6 +17,5 @@ auth:
       refresh: ${JWT_REFRESH_TOKEN_EXP}
     header: ${JWT_HEADER}
     prefix: ${JWT_PREFIX}
-#    hibernate:
-#      ddl-auto: update
+
 

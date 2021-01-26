@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -17,6 +18,6 @@ public class AttendanceResponse {
 
     private LocalDateTime dateTime;
 
-    private String userId;
+    private UUID userId;
 
 }

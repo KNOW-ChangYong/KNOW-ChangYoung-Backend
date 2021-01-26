@@ -21,10 +21,8 @@ import java.util.UUID;
 public class Student {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
-    private String id;
+    @GeneratedValue
+    private UUID id;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     @JsonBackReference
