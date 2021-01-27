@@ -26,6 +26,9 @@ public class Student {
     @Column(name = "nickname")
     private String nickname;
 
+    @Column(name = "name")
+    private String name;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     @JsonBackReference
     private List<Attendance> attendanceList;

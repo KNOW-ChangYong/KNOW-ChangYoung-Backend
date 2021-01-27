@@ -6,6 +6,7 @@ import com.example.check.entity.student.Student;
 import com.example.check.entity.student.StudentRepository;
 import com.example.check.exception.AlreadyAttendancedException;
 import com.example.check.exception.StudentNotFoundException;
+import com.example.check.exception.UnAuthorizationException;
 import com.example.check.exception.UserNotFoundException;
 import com.example.check.payload.request.AttendanceRequest;
 import com.example.check.payload.response.AttendanceResponse;
@@ -32,8 +33,12 @@ public class AttendanceServiceImpl implements AttendanceService{
 
     @Override
     public void createAttendance(AttendanceRequest request) {
+
+        System.out.println("서비스");
+        System.out.println(authenticationFacade.isLogined());
+        System.out.println(authenticationFacade.getStudentId());
         if(!authenticationFacade.isLogined()) {
-            throw new UserNotFoundException();
+            throw new UnAuthorizationException();
         }
 
         Student student = studentRepository.findById(authenticationFacade.getStudentId())
@@ -109,7 +114,7 @@ public class AttendanceServiceImpl implements AttendanceService{
     @Override
     public List<AttendanceResponse> getStudentAttendanceList(String studentId) {
         if(!authenticationFacade.isLogined()) {
-            throw new UserNotFoundException();
+            throw new UnAuthorizationException();
         }
 
         Student student = studentRepository.findById(studentId)

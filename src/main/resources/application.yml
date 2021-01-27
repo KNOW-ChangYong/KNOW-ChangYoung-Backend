@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DB_URL}
-    username: ${DB_USERNAME}
+    username: root
     password: ${DB_PASSWORD}
   jpa:
     generate-ddl: true
@@ -15,7 +15,7 @@ auth:
     secret: ${SECRET_KEY}
     exp:
       access: ${JWT_ACCESS_TOKEN_EXP}
-    header: ${JWT_HEADER}
-    prefix: ${JWT_PREFIX}
+    header: Authorization
+    prefix: Bearer
 server:
   port: 3002

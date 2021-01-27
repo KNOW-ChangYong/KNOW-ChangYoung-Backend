@@ -5,6 +5,7 @@ import com.example.check.entity.saying.SayingRepository;
 import com.example.check.entity.student.Student;
 import com.example.check.entity.student.StudentRepository;
 import com.example.check.exception.StudentNotFoundException;
+import com.example.check.exception.UnAuthorizationException;
 import com.example.check.exception.UserNotFoundException;
 import com.example.check.payload.response.SayingResponse;
 import com.example.check.security.auth.AuthenticationFacade;
@@ -22,7 +23,7 @@ public class SayingServiceImpl implements SayingService{
     @Override
     public void createSaying(String content) {
         if(!authenticationFacade.isLogined()) {
-            throw new UserNotFoundException();
+            throw new UnAuthorizationException();
         }
 
         Student student = studentRepository.findById(authenticationFacade.getStudentId())
