@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
         web.ignoring().antMatchers(HttpMethod.POST, "/auth")
         .antMatchers(HttpMethod.GET, "/attendance")
         .antMatchers(HttpMethod.GET, "/attendance/*")
+        .antMatchers(HttpMethod.GET, "/attendance/profile/*")
         .antMatchers(HttpMethod.GET, "/saying");
     }
 

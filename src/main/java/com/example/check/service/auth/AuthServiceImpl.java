@@ -2,8 +2,10 @@ package com.example.check.service.auth;
 
 import com.example.check.entity.student.Student;
 import com.example.check.entity.student.StudentRepository;
+import com.example.check.exception.StudentNotFoundException;
 import com.example.check.exception.UnAuthorizationException;
 import com.example.check.payload.request.AuthRequest;
+import com.example.check.payload.response.StudentResponse;
 import com.example.check.payload.response.TokenResponse;
 import com.example.check.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;

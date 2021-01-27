@@ -18,6 +18,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +71,8 @@ public class AttendanceServiceImpl implements AttendanceService{
     public List<AttendanceResponse> getTodayAttendanceList(LocalDate date) {
 
         List<Attendance> attendanceList = attendanceRepository.findAllByDateTimeBetweenOrderByDateTime(
-                startTime, endTime);
+                LocalDateTime.of(date, LocalTime.of(0,0)),
+                LocalDateTime.of(date, LocalTime.of(23,59)));
 
         List<AttendanceResponse> attendanceResponses = new ArrayList<>();
 
