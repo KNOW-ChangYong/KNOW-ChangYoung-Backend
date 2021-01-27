@@ -113,9 +113,6 @@ public class AttendanceServiceImpl implements AttendanceService{
 
     @Override
     public List<AttendanceResponse> getStudentAttendanceList(String studentId) {
-        if(!authenticationFacade.isLogined()) {
-            throw new UnAuthorizationException();
-        }
 
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(StudentNotFoundException::new);
