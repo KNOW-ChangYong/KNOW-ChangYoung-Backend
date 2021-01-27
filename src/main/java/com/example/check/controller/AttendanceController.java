@@ -1,12 +1,9 @@
 package com.example.check.controller;
 
-import com.example.check.entity.attendance.Attendance;
-import com.example.check.payload.request.AttendanceRequest;
 import com.example.check.payload.response.AttendanceCountResponse;
 import com.example.check.payload.response.AttendanceResponse;
 import com.example.check.service.attendance.AttendanceService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.event.service.spi.JpaBootstrapSensitive;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +18,8 @@ public class AttendanceController {
     private final AttendanceService attendanceService;
 
     @PostMapping
-    public void postAttendance(@RequestBody AttendanceRequest request) {
-        attendanceService.createAttendance(request);
+    public void postAttendance() {
+        attendanceService.createAttendance();
     }
 
     @GetMapping("/{date}")

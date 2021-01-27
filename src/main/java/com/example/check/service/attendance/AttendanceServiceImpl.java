@@ -7,13 +7,10 @@ import com.example.check.entity.student.StudentRepository;
 import com.example.check.exception.AlreadyAttendancedException;
 import com.example.check.exception.StudentNotFoundException;
 import com.example.check.exception.UnAuthorizationException;
-import com.example.check.exception.UserNotFoundException;
-import com.example.check.payload.request.AttendanceRequest;
 import com.example.check.payload.response.AttendanceCountResponse;
 import com.example.check.payload.response.AttendanceResponse;
 import com.example.check.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -37,7 +34,7 @@ public class AttendanceServiceImpl implements AttendanceService{
     LocalDateTime endTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 8,2);
 
     @Override
-    public void createAttendance(AttendanceRequest request) {
+    public void createAttendance() {
 
         if(!authenticationFacade.isLogined()) {
             throw new UnAuthorizationException();

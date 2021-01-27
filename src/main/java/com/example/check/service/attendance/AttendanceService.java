@@ -1,6 +1,5 @@
 package com.example.check.service.attendance;
 
-import com.example.check.payload.request.AttendanceRequest;
 import com.example.check.payload.response.AttendanceCountResponse;
 import com.example.check.payload.response.AttendanceResponse;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 public interface AttendanceService {
 
-    void createAttendance(AttendanceRequest request);
+    void createAttendance();
 
     List<AttendanceResponse> getTodayAttendanceList(LocalDate date);
 
