@@ -31,7 +31,7 @@ public class AttendanceServiceImpl implements AttendanceService{
     private final StudentRepository studentRepository;
 
     LocalDateTime now = LocalDateTime.now();
-    LocalDateTime startTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 6,0);
+    LocalDateTime startTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 5,30);
     LocalDateTime endTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 8,2);
 
     @Override
@@ -45,7 +45,7 @@ public class AttendanceServiceImpl implements AttendanceService{
                 .orElseThrow(StudentNotFoundException::new);
 
 
-        if(/*now.isBefore(endTime) || now.isAfter(startTime) ||*/
+        if(now.isBefore(startTime) || now.isAfter(endTime) ||
                 !attendanceRepository.findAllByStudentAndDateTimeBetween(student, startTime, endTime).isEmpty()) {
             throw new AlreadyAttendancedException();
         }
