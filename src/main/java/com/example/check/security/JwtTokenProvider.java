@@ -28,7 +28,7 @@ public class JwtTokenProvider {
     private String header;
 
     @Value("${auth.jwt.prefix}")
-    private String prefix = "bearer";
+    private String prefix;
 
     private final AuthDetailService authDetailService;
 
@@ -37,7 +37,6 @@ public class JwtTokenProvider {
                 .setIssuedAt(new Date())
                 .setSubject(id)
                 .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration * 1000))
-                .claim("type","access_token")
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }

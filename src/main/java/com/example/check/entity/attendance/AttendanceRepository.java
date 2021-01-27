@@ -9,6 +9,12 @@ import java.util.List;
 
 public interface AttendanceRepository extends CrudRepository<Attendance, Long> {
 
-    List<Attendance> findAllByDateTimeBetween(LocalDateTime startDate, LocalDateTime endDate);
+    List<Attendance> findAllByStudentAndDateTimeBetween(Student student, LocalDateTime startDate, LocalDateTime endDate);
+
+    List<Attendance> findAllByDateTimeBetweenOrderByDateTime(LocalDateTime startDate, LocalDateTime endDate);
+
+    List<Attendance> findAllBy();
+
+    List<Attendance> findAllByStudent(Student student);;
 
 }

@@ -2,6 +2,7 @@ package com.example.check.controller;
 
 import com.example.check.payload.request.AuthRequest;
 import com.example.check.payload.response.AuthResponse;
+import com.example.check.security.auth.AuthDetails;
 import com.example.check.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,10 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping
-    public AuthResponse signIn(@RequestBody AuthRequest authRequest) {
-        return authService.signIn(authRequest);
+    public String signIn(@RequestBody AuthRequest authRequest) {
+        String token = authService.signIn(authRequest);
+        System.out.println(token);
+        return token;
     }
 
 }

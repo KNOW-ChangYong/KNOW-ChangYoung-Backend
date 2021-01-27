@@ -12,4 +12,8 @@ public interface AttendanceService {
 
     List<AttendanceResponse> getTodayAttendanceList(LocalDate date);
 
+    List<AttendanceResponse> getAttendanceList();
+
+    List<AttendanceResponse> getStudentAttendanceList(String studentId);
+
 }

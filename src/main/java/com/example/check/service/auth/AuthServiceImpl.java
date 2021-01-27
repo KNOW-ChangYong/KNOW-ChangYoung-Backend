@@ -17,20 +17,19 @@ public class AuthServiceImpl implements AuthService{
     private final StudentRepository studentRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Value("${auth.jwt.exp.refresh}")
-    private Long refreshExp;
-
     @Value("${auth.jwt.exp.access}")
     private Long accessExp;
 
     @Override
-    public AuthResponse signIn(AuthRequest authRequest) {
+    public String signIn(AuthRequest authRequest) {
         Student student = studentRepository.findById(authRequest.getId())
                 .orElseThrow(UserNotFoundException::new);
 
         student.update(authRequest.getNickname());
 
-        return new AuthResponse(jwtTokenProvider.generateAccessToken(authRequest.getId()));
+        studentRepository.save(student);
+
+        return jwtTokenProvider.generateAccessToken(authRequest.getId());
 
     }
 

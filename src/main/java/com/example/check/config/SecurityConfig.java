@@ -1,6 +1,6 @@
 package com.example.check.config;
 
-import com.example.check.security.JwtConfigurer;
+import com.example.check.security.JwtAuthenticationFilter;
 import com.example.check.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -29,15 +30,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     @Override
     protected void configure(HttpSecurity security) throws Exception {
         security
+                .httpBasic().disable()
                 .csrf().disable()
                 .cors().and()
                 .sessionManagement().disable()
                 .formLogin().disable()
                 .authorizeRequests()
-                    .antMatchers(HttpMethod.GET,"/attendance/list").permitAll()
-                    .antMatchers(HttpMethod.POST, "/auth/signup").permitAll()
+                    .antMatchers(HttpMethod.GET,"/attendance/**").permitAll()
                 .and()
-                    .apply(new JwtConfigurer(jwtTokenProvider));
+                    .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

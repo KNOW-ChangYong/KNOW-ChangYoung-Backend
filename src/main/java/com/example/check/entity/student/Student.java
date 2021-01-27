@@ -23,6 +23,7 @@ public class Student {
     @Id
     private String id;
 
+    @Column(name = "nickname")
     private String nickname;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
