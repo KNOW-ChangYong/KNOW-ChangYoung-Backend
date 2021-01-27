@@ -82,6 +82,7 @@ public class AttendanceServiceImpl implements AttendanceService{
                             .dateTime(attendance.getDateTime())
                             .id(attendance.getId())
                             .userId(attendance.getStudent().getId())
+                            .userName(attendance.getStudent().getName())
                             .build()
             );
         }
@@ -127,6 +128,7 @@ public class AttendanceServiceImpl implements AttendanceService{
                             .dateTime(attendance.getDateTime())
                             .id(attendance.getId())
                             .userId(attendance.getStudent().getId())
+                            .userName(attendance.getStudent().getName())
                             .build()
             );
         }
