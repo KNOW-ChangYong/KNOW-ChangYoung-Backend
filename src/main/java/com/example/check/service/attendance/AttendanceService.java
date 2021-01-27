@@ -1,6 +1,7 @@
 package com.example.check.service.attendance;
 
 import com.example.check.payload.request.AttendanceRequest;
+import com.example.check.payload.response.AttendanceCountResponse;
 import com.example.check.payload.response.AttendanceResponse;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ public interface AttendanceService {
 
     List<AttendanceResponse> getTodayAttendanceList(LocalDate date);
 
-    List<AttendanceResponse> getAttendanceList();
+    List<AttendanceCountResponse> getAttendanceList();
 
     List<AttendanceResponse> getStudentAttendanceList(String studentId);
 

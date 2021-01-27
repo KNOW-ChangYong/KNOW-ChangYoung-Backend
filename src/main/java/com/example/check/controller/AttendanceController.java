@@ -2,6 +2,7 @@ package com.example.check.controller;
 
 import com.example.check.entity.attendance.Attendance;
 import com.example.check.payload.request.AttendanceRequest;
+import com.example.check.payload.response.AttendanceCountResponse;
 import com.example.check.payload.response.AttendanceResponse;
 import com.example.check.service.attendance.AttendanceService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class AttendanceController {
     }
 
     @GetMapping
-    public List<AttendanceResponse> getAttendanceList() {
+    public List<AttendanceCountResponse> getAttendanceList() {
         return attendanceService.getAttendanceList();
     }
 

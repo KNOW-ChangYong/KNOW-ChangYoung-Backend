@@ -33,7 +33,6 @@ public class JwtTokenProvider {
     private final AuthDetailService authDetailService;
 
     public String generateAccessToken(String id) {
-        System.out.println("generate token!");
         return Jwts.builder()
                 .setIssuedAt(new Date())
                 .setSubject(id)
@@ -43,14 +42,10 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
-        System.out.println(request.getHeader(header));
         String bearerToken = request.getHeader(header);
-        System.out.println(bearerToken);
         if(bearerToken != null && bearerToken.startsWith(prefix)) {
-            System.out.println("resolve good!");
             return bearerToken.substring(7);
         }
-        System.out.println("resolve failed..");
         return null;
     }
 
@@ -58,7 +53,6 @@ public class JwtTokenProvider {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
                     .getBody().getSubject();
-            System.out.println("validate!");
             return true;
         } catch (Exception e) {
             throw new InvalidTokenException();

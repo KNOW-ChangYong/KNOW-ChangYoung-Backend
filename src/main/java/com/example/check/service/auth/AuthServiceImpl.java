@@ -4,6 +4,7 @@ import com.example.check.entity.student.Student;
 import com.example.check.entity.student.StudentRepository;
 import com.example.check.exception.UnAuthorizationException;
 import com.example.check.payload.request.AuthRequest;
+import com.example.check.payload.response.TokenResponse;
 import com.example.check.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,7 @@ public class AuthServiceImpl implements AuthService{
     private Long accessExp;
 
     @Override
-    public String signIn(AuthRequest authRequest) {
+    public TokenResponse signIn(AuthRequest authRequest) {
         Student student = studentRepository.findById(authRequest.getId())
                 .orElseThrow(UnAuthorizationException::new);
 
@@ -28,8 +29,11 @@ public class AuthServiceImpl implements AuthService{
 
         studentRepository.save(student);
 
-        return jwtTokenProvider.generateAccessToken(authRequest.getId());
-
+        return TokenResponse.builder()
+                .accessToken(jwtTokenProvider.generateAccessToken(authRequest.getId()))
+                .tokenType("access")
+                .accessTokenExp(accessExp)
+                .build();
     }
 
 }

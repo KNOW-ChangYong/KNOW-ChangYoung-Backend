@@ -9,6 +9,7 @@ import com.example.check.exception.StudentNotFoundException;
 import com.example.check.exception.UnAuthorizationException;
 import com.example.check.exception.UserNotFoundException;
 import com.example.check.payload.request.AttendanceRequest;
+import com.example.check.payload.response.AttendanceCountResponse;
 import com.example.check.payload.response.AttendanceResponse;
 import com.example.check.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +32,13 @@ public class AttendanceServiceImpl implements AttendanceService{
     private final AttendanceRepository attendanceRepository;
     private final StudentRepository studentRepository;
 
+    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime startTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 6,0);
+    LocalDateTime endTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 8,2);
+
     @Override
     public void createAttendance(AttendanceRequest request) {
 
-        System.out.println("서비스");
-        System.out.println(authenticationFacade.isLogined());
-        System.out.println(authenticationFacade.getStudentId());
         if(!authenticationFacade.isLogined()) {
             throw new UnAuthorizationException();
         }
@@ -44,10 +46,6 @@ public class AttendanceServiceImpl implements AttendanceService{
         Student student = studentRepository.findById(authenticationFacade.getStudentId())
                 .orElseThrow(StudentNotFoundException::new);
 
-        LocalDateTime now = LocalDateTime.now();
-
-        LocalDateTime startTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 6,0);
-        LocalDateTime endTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 8,2);
 
         if(/*now.isBefore(endTime) || now.isAfter(startTime) ||*/
                 !attendanceRepository.findAllByStudentAndDateTimeBetween(student, startTime, endTime).isEmpty()) {
@@ -67,14 +65,15 @@ public class AttendanceServiceImpl implements AttendanceService{
                         .build()
         );
 
+        studentRepository.save(student.addCount());
+
     }
 
     @Override
     public List<AttendanceResponse> getTodayAttendanceList(LocalDate date) {
 
         List<Attendance> attendanceList = attendanceRepository.findAllByDateTimeBetweenOrderByDateTime(
-                LocalDateTime.of(date.getYear(),date.getMonth(),date.getDayOfMonth(), 6,0,0),
-                LocalDateTime.of(date.getYear(),date.getMonth(),date.getDayOfMonth(), 8,2,0));
+                startTime, endTime);
 
         List<AttendanceResponse> attendanceResponses = new ArrayList<>();
 
@@ -92,23 +91,25 @@ public class AttendanceServiceImpl implements AttendanceService{
     }
 
     @Override
-    public List<AttendanceResponse> getAttendanceList() {
+    public List<AttendanceCountResponse> getAttendanceList() {
 
-        List<Attendance> attendanceList = attendanceRepository.findAllBy();
+        List<Student> students = studentRepository.findAllBy();
+        List<AttendanceCountResponse> attendanceCountResponses = new ArrayList<>();
+        Integer dateSum = LocalDate.now().getDayOfYear() - LocalDate.of(2021,01,27).getDayOfYear();
 
-        List<AttendanceResponse> attendanceResponses = new ArrayList<>();
-
-        for(Attendance attendance : attendanceList) {
-            attendanceResponses.add(
-                    AttendanceResponse.builder()
-                            .dateTime(attendance.getDateTime())
-                            .id(attendance.getId())
-                            .userId(attendance.getStudent().getId())
-                            .build()
+        for(Student student : students) {
+            attendanceCountResponses.add(
+                AttendanceCountResponse.builder()
+                        .notAttendanceCount(dateSum - student.getCount())
+                        .attendanceCount(student.getCount())
+                        .dateSum(dateSum)
+                        .name(student.getName())
+                        .build()
             );
         }
 
-        return attendanceResponses;
+        return attendanceCountResponses;
+
     }
 
     @Override
