@@ -43,9 +43,12 @@ public class SayingServiceImpl implements SayingService{
         Saying saying = sayingRepository.findRandomSaying()
                 .orElseThrow(StudentNotFoundException::new);
 
+        Student student = studentRepository.findById(saying.getStudentId())
+                .orElseThrow(StudentNotFoundException::new);
+
         return SayingResponse.builder()
                 .content(saying.getContent())
-                .studentId(saying.getStudentId())
+                .name(student.getName())
                 .build();
 
     }

@@ -13,6 +13,6 @@ public class SayingResponse {
 
     String content;
 
-    String studentId;
+    String name;
 
 }
