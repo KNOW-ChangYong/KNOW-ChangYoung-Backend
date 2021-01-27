@@ -19,6 +19,6 @@ public class AttendanceResponse {
 
     private String userId;
 
-    private String userName;
+    private String name;
 
 }

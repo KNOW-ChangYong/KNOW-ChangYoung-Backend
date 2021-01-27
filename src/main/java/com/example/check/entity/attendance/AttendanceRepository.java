@@ -15,6 +15,4 @@ public interface AttendanceRepository extends CrudRepository<Attendance, Long> {
 
     List<Attendance> findAllByStudent(Student student);
 
-    List<Attendance> countAllByStudentAndDateTimeBetween(Student student, LocalDateTime startDate, LocalDateTime endDate);
-
 }
