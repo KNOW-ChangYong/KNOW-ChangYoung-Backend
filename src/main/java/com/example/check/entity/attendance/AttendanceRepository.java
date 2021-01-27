@@ -15,6 +15,6 @@ public interface AttendanceRepository extends CrudRepository<Attendance, Long> {
 
     List<Attendance> findAllBy();
 
-    List<Attendance> findAllByStudent(Student student);;
+    List<Attendance> findAllByStudent(Student student);
 
 }
