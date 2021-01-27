@@ -13,4 +13,6 @@ public class AuthRequest {
     @NotNull
     private String id;
 
+    private String nickname;
+
 }

@@ -24,9 +24,6 @@ public class JwtTokenProvider {
     @Value("${auth.jwt.exp.access}")
     private Long accessTokenExpiration;
 
-    @Value("${auth.jwt.exp.refresh}")
-    private Long refreshTokenExpiration;
-
     @Value("${auth.jwt.header}")
     private String header;
 
@@ -41,16 +38,6 @@ public class JwtTokenProvider {
                 .setSubject(id)
                 .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration * 1000))
                 .claim("type","access_token")
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
-    }
-
-    public String generateRefreshToken(String id) {
-        return Jwts.builder()
-                .setIssuedAt(new Date())
-                .setSubject(id)
-                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration * 1000))
-                .claim("type","refresh_token")
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
@@ -86,13 +73,4 @@ public class JwtTokenProvider {
         AuthDetails authDetails = authDetailService.loadUserByUsername(getId(token));
         return new UsernamePasswordAuthenticationToken(authDetails, "",authDetails.getAuthorities());
     }
-
-    private boolean isRefreshToken(String token) {
-        try {
-            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("type").equals("refresh_token");
-        }catch (Exception e) {
-            throw new InvalidTokenException();
-        }
-    }
-
 }

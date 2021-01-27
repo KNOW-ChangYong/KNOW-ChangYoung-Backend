@@ -17,5 +17,3 @@ auth:
       refresh: ${JWT_REFRESH_TOKEN_EXP}
     header: ${JWT_HEADER}
     prefix: ${JWT_PREFIX}
-
-

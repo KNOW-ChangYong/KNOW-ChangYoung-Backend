@@ -21,11 +21,17 @@ import java.util.UUID;
 public class Student {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    private String id;
+
+    private String nickname;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     @JsonBackReference
     private List<Attendance> attendanceList;
+
+    public Student update(String nickname) {
+        this.nickname = nickname;
+        return this;
+    }
 
 }

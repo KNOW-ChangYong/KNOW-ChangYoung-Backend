@@ -6,6 +6,4 @@ import com.example.check.payload.response.RefreshTokenResponse;
 
 public interface AuthService {
     AuthResponse signIn(AuthRequest authRequest);
-
-    RefreshTokenResponse tokenRefresh(String token);
 }
