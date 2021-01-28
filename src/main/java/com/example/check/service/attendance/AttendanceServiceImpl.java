@@ -98,7 +98,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 
         LocalDate startDate = LocalDate.of(2021,01,18);
         LocalDate todayDate = LocalDate.now();
-        Integer dateSum = todayDate.getDayOfYear() - startDate.getDayOfYear();
+        Integer dateSum = todayDate.getDayOfYear() - startDate.getDayOfYear() + 1;
 
         while(!startDate.isAfter(todayDate)) {
             if(startDate.getDayOfWeek().getValue() >= 6) {
