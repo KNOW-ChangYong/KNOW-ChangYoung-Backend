@@ -44,9 +44,10 @@ public class AttendanceServiceImpl implements AttendanceService{
         Student student = studentRepository.findById(authenticationFacade.getStudentId())
                 .orElseThrow(StudentNotFoundException::new);
 
-
         if(now.isBefore(startTime) || now.isAfter(endTime) ||
-                !attendanceRepository.findAllByStudentAndDateTimeBetween(student, startTime, endTime).isEmpty()) {
+                !attendanceRepository.findAllByStudentAndDateTimeBetween(student,
+                        LocalDateTime.of(startTime.toLocalDate(),LocalTime.of(0,0))
+                        , LocalDateTime.of(endTime.toLocalDate(),LocalTime.of(23,59))).isEmpty()) {
             throw new AlreadyAttendancedException();
         }
 
@@ -93,7 +94,7 @@ public class AttendanceServiceImpl implements AttendanceService{
     @Override
     public List<AttendanceCountResponse> getAttendanceList() {
 
-        List<Student> students = studentRepository.findAllBy();
+        List<Student> students = studentRepository.findAllByOrderByName();
         List<AttendanceCountResponse> attendanceCountResponses = new ArrayList<>();
         Integer dateSum = LocalDate.now().getDayOfYear() - LocalDate.of(2021,01,27).getDayOfYear();
 
@@ -118,7 +119,7 @@ public class AttendanceServiceImpl implements AttendanceService{
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(StudentNotFoundException::new);
 
-        List<Attendance> attendanceList = attendanceRepository.findAllByStudent(student);
+        List<Attendance> attendanceList = attendanceRepository.findAllByStudentOrderByDateTimeDesc(student);
 
         List<AttendanceResponse> attendanceResponses = new ArrayList<>();
 
