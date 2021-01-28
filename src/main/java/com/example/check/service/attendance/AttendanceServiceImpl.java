@@ -46,8 +46,8 @@ public class AttendanceServiceImpl implements AttendanceService{
 
         if(now.isBefore(startTime) || now.isAfter(endTime) ||
                 !attendanceRepository.findAllByStudentAndDateTimeBetween(student,
-                        LocalDateTime.of(startTime.toLocalDate(),LocalTime.of(0,0))
-                        , LocalDateTime.of(endTime.toLocalDate(),LocalTime.of(23,59))).isEmpty()) {
+                        LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(),0,0)
+                        , LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(),23,59)).isEmpty()) {
             throw new AlreadyAttendancedException();
         }
 
