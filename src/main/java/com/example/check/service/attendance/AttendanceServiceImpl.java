@@ -64,8 +64,6 @@ public class AttendanceServiceImpl implements AttendanceService{
                         .build()
         );
 
-        studentRepository.save(student.addCount());
-
     }
 
     @Override
@@ -97,13 +95,24 @@ public class AttendanceServiceImpl implements AttendanceService{
         List<Student> students = studentRepository.findAllByOrderByNameAsc();
 
         List<AttendanceCountResponse> attendanceCountResponses = new ArrayList<>();
-        Integer dateSum = LocalDate.now().getDayOfYear() - LocalDate.of(2021,01,27).getDayOfYear();
+
+        LocalDate startDate = LocalDate.of(2021,01,18);
+        LocalDate todayDate = LocalDate.now();
+        Integer dateSum = todayDate.getDayOfYear() - startDate.getDayOfYear();
+
+        while(!startDate.isAfter(todayDate)) {
+            if(startDate.getDayOfWeek().getValue() >= 6) {
+                dateSum --;
+            }
+            startDate.plusDays(1);
+        }
 
         for(Student student : students) {
+            Integer count = attendanceRepository.countAllByStudent(student);
             attendanceCountResponses.add(
                 AttendanceCountResponse.builder()
-                        .notAttendanceCount(dateSum - student.getCount())
-                        .attendanceCount(student.getCount())
+                        .notAttendanceCount(dateSum - count)
+                        .attendanceCount(count)
                         .dateSum(dateSum)
                         .name(student.getName())
                         .build()

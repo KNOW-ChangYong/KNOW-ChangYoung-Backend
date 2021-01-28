@@ -15,4 +15,6 @@ public interface AttendanceRepository extends CrudRepository<Attendance, Long> {
 
     List<Attendance> findAllByStudentOrderByDateTimeDesc(Student student);
 
+    Integer countAllByStudent(Student student);
+
 }

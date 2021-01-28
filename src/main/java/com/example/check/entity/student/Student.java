@@ -29,20 +29,12 @@ public class Student {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "count", nullable = false)
-    private Integer count;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
     @JsonBackReference
     private List<Attendance> attendanceList;
 
     public Student update(String nickname) {
         this.nickname = nickname;
-        return this;
-    }
-
-    public Student addCount() {
-        this.count++;
         return this;
     }
 
