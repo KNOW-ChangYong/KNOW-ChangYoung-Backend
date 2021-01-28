@@ -104,7 +104,7 @@ public class AttendanceServiceImpl implements AttendanceService{
             if(startDate.getDayOfWeek().getValue() >= 6) {
                 dateSum --;
             }
-            startDate.plusDays(1);
+            startDate = startDate.plusDays(1);
         }
 
         for(Student student : students) {
