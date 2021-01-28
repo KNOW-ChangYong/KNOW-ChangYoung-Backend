@@ -71,7 +71,7 @@ public class AttendanceServiceImpl implements AttendanceService{
     @Override
     public List<AttendanceResponse> getTodayAttendanceList(LocalDate date) {
 
-        List<Attendance> attendanceList = attendanceRepository.findAllByDateTimeBetweenOrderByDateTime(
+        List<Attendance> attendanceList = attendanceRepository.findAllByDateTimeBetweenOrderByDateTimeDesc(
                 LocalDateTime.of(date, LocalTime.of(0,0)),
                 LocalDateTime.of(date, LocalTime.of(23,59)));
 
@@ -94,7 +94,8 @@ public class AttendanceServiceImpl implements AttendanceService{
     @Override
     public List<AttendanceCountResponse> getAttendanceList() {
 
-        List<Student> students = studentRepository.findAllByOrderByName();
+        List<Student> students = studentRepository.findAllByOrderByNameAsc();
+        
         List<AttendanceCountResponse> attendanceCountResponses = new ArrayList<>();
         Integer dateSum = LocalDate.now().getDayOfYear() - LocalDate.of(2021,01,27).getDayOfYear();
 
