@@ -4,7 +4,8 @@ import com.example.check.entity.attendance.Attendance;
 import com.example.check.entity.attendance.AttendanceRepository;
 import com.example.check.entity.student.Student;
 import com.example.check.entity.student.StudentRepository;
-import com.example.check.exception.AlreadyAttendancedException;
+import com.example.check.exception.AlreadyAttendanceException;
+import com.example.check.exception.AttendanceTimeException;
 import com.example.check.exception.StudentNotFoundException;
 import com.example.check.exception.UnAuthorizationException;
 import com.example.check.payload.response.AttendanceCountResponse;
@@ -45,10 +46,13 @@ public class AttendanceServiceImpl implements AttendanceService{
                 .orElseThrow(StudentNotFoundException::new);
 
         if(now.isBefore(startTime) || now.isAfter(endTime) ||
-                !attendanceRepository.findAllByStudentAndDateTimeBetween(student,
-                        LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(),0,0)
-                        , LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(),23,59)).isEmpty()) {
-            throw new AlreadyAttendancedException();
+                (now.getDayOfWeek().getValue() == 6 || now.getDayOfWeek().getValue() == 7)) {
+            throw new AttendanceTimeException();
+        }
+        if(!attendanceRepository.findAllByStudentAndDateTimeBetween(student,
+                LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(),0,0)
+                , LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(),23,59)).isEmpty()) {
+            throw new AlreadyAttendanceException();
         }
 
         HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
