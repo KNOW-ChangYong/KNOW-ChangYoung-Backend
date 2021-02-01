@@ -37,7 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
         .antMatchers(HttpMethod.GET, "/attendance/*")
         .antMatchers(HttpMethod.GET, "/attendance/profile/{userId}")
         .antMatchers(HttpMethod.GET, "/attendance/**")
-        .antMatchers(HttpMethod.GET, "/saying");
+        .antMatchers(HttpMethod.GET, "/saying")
+        .antMatchers(HttpMethod.GET, "/attendancestatus");
     }
 
     @Override

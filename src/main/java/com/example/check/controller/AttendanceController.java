@@ -2,6 +2,7 @@ package com.example.check.controller;
 
 import com.example.check.payload.response.AttendanceCountResponse;
 import com.example.check.payload.response.AttendanceResponse;
+import com.example.check.payload.response.StudentResponse;
 import com.example.check.service.attendance.AttendanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,6 +37,11 @@ public class AttendanceController {
     @GetMapping("/profile/{studentId}")
     public List<AttendanceResponse> getStudentAttendanceList(@PathVariable String studentId) {
         return attendanceService.getStudentAttendanceList(studentId);
+    }
+
+    @GetMapping("/attendancestatus")
+    public List<StudentResponse> getNotAttendanceStudent() {
+        return attendanceService.getNotAttendanceStudent();
     }
 
 }

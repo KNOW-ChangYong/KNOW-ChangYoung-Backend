@@ -17,9 +17,7 @@ public class AuthController {
     @PostMapping
     @ResponseBody
     public TokenResponse signIn(@RequestBody AuthRequest authRequest) {
-        TokenResponse tokenResponse = authService.signIn(authRequest);
-        System.out.println(tokenResponse.getAccessToken());
-        return tokenResponse;
+        return authService.signIn(authRequest);
     }
 
 }

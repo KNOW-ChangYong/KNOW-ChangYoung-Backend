@@ -10,6 +10,7 @@ import com.example.check.exception.StudentNotFoundException;
 import com.example.check.exception.UnAuthorizationException;
 import com.example.check.payload.response.AttendanceCountResponse;
 import com.example.check.payload.response.AttendanceResponse;
+import com.example.check.payload.response.StudentResponse;
 import com.example.check.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 
     LocalDateTime now = LocalDateTime.now();
     LocalDateTime startTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 5,30);
-    LocalDateTime endTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 8,2);
+    LocalDateTime endTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 12,2);
 
     @Override
     public void createAttendance() {
@@ -149,5 +150,37 @@ public class AttendanceServiceImpl implements AttendanceService{
         }
 
         return attendanceResponses;
+    }
+
+    @Override
+    public List<StudentResponse> getNotAttendanceStudent() {
+        boolean isAttendance = false;
+
+        LocalDate date = LocalDate.now();
+        List<Student> students = studentRepository.findAllByOrderByNameAsc();
+        List<Attendance> attendanceList = attendanceRepository.findAllByDateTimeBetweenOrderByDateTimeDesc(
+                LocalDateTime.of(date,LocalTime.of(0,0)),
+                LocalDateTime.of(date,LocalTime.of(23,59)));
+        List<StudentResponse> studentResponses = new ArrayList<>();
+
+        for(Student student : students) {
+            for(Attendance attendance : attendanceList) {
+                if (attendance.getStudent().equals(student)) {
+                    isAttendance = true;
+                }
+            }
+            if(!isAttendance) {
+                studentResponses.add(
+                        StudentResponse.builder()
+                                .userId(student.getId())
+                                .name(student.getName())
+                                .nickname(student.getNickname())
+                                .build()
+                );
+            }
+        }
+
+        return studentResponses;
+
     }
 }
