@@ -2,6 +2,7 @@ package com.example.check.controller;
 
 import com.example.check.payload.response.AttendanceCountResponse;
 import com.example.check.payload.response.AttendanceResponse;
+import com.example.check.payload.response.StudentGraphResponse;
 import com.example.check.payload.response.StudentResponse;
 import com.example.check.service.attendance.AttendanceService;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public class AttendanceController {
     }
 
     @GetMapping("/attendancestatus")
-    public List<StudentResponse> getNotAttendanceStudent() {
+    public StudentGraphResponse getNotAttendanceStudent() {
         return attendanceService.getNotAttendanceStudent();
     }
 

@@ -17,4 +17,6 @@ public interface AttendanceRepository extends CrudRepository<Attendance, Long> {
 
     Integer countAllByStudent(Student student);
 
+    Integer countAllBy();
+
 }

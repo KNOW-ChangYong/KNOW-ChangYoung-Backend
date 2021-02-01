@@ -2,6 +2,7 @@ package com.example.check.service.attendance;
 
 import com.example.check.payload.response.AttendanceCountResponse;
 import com.example.check.payload.response.AttendanceResponse;
+import com.example.check.payload.response.StudentGraphResponse;
 import com.example.check.payload.response.StudentResponse;
 
 import java.time.LocalDate;
@@ -17,6 +18,6 @@ public interface AttendanceService {
 
     List<AttendanceResponse> getStudentAttendanceList(String studentId);
 
-    List<StudentResponse> getNotAttendanceStudent();
+    StudentGraphResponse getNotAttendanceStudent();
 
 }

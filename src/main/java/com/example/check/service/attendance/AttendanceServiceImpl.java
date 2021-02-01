@@ -10,6 +10,7 @@ import com.example.check.exception.StudentNotFoundException;
 import com.example.check.exception.UnAuthorizationException;
 import com.example.check.payload.response.AttendanceCountResponse;
 import com.example.check.payload.response.AttendanceResponse;
+import com.example.check.payload.response.StudentGraphResponse;
 import com.example.check.payload.response.StudentResponse;
 import com.example.check.security.auth.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
@@ -153,8 +154,19 @@ public class AttendanceServiceImpl implements AttendanceService{
     }
 
     @Override
-    public List<StudentResponse> getNotAttendanceStudent() {
+    public StudentGraphResponse getNotAttendanceStudent() {
         boolean isAttendance = false;
+
+        LocalDate startDate = LocalDate.of(2021,01,18);
+        LocalDate todayDate = LocalDate.now();
+        Integer dateSum = todayDate.getDayOfYear() - startDate.getDayOfYear() + 1;
+
+        while(!startDate.isAfter(todayDate)) {
+            if(startDate.getDayOfWeek().getValue() >= 6) {
+                dateSum --;
+            }
+            startDate = startDate.plusDays(1);
+        }
 
         LocalDate date = LocalDate.now();
         List<Student> students = studentRepository.findAllByOrderByNameAsc();
@@ -162,6 +174,11 @@ public class AttendanceServiceImpl implements AttendanceService{
                 LocalDateTime.of(date,LocalTime.of(0,0)),
                 LocalDateTime.of(date,LocalTime.of(23,59)));
         List<StudentResponse> studentResponses = new ArrayList<>();
+
+        Integer lastAmount = attendanceRepository.countAllBy();
+        Integer todayAmount = attendanceRepository.findAllByDateTimeBetweenOrderByDateTimeDesc(
+                LocalDateTime.of(startDate,LocalTime.of(0,0)),
+                LocalDateTime.of(todayDate.minusDays(1), LocalTime.of(23,59))).size();
 
         for(Student student : students) {
             for(Attendance attendance : attendanceList) {
@@ -181,7 +198,11 @@ public class AttendanceServiceImpl implements AttendanceService{
             isAttendance = false;
         }
 
-        return studentResponses;
+        return StudentGraphResponse.builder()
+                .studentResponses(studentResponses)
+                .lastDayGraph(lastAmount/21*dateSum)
+                .todayGraph(todayAmount/21*dateSum)
+                .build();
 
     }
 }
