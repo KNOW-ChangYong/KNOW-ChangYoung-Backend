@@ -158,14 +158,15 @@ public class AttendanceServiceImpl implements AttendanceService{
         boolean isAttendance = false;
 
         LocalDate startDate = LocalDate.of(2021,01,18);
+        LocalDate tmp = LocalDate.of(2021,01,18);
         LocalDate todayDate = LocalDate.now();
-        Integer dateSum = todayDate.getDayOfYear() - startDate.getDayOfYear() + 1;
+        Integer dateSum = todayDate.getDayOfYear() - tmp.getDayOfYear() + 1;
 
-        while(!startDate.isAfter(todayDate)) {
-            if(startDate.getDayOfWeek().getValue() >= 6) {
+        while(!tmp.isAfter(todayDate)) {
+            if(tmp.getDayOfWeek().getValue() >= 6) {
                 dateSum --;
             }
-            startDate = startDate.plusDays(1);
+            tmp = tmp.plusDays(1);
         }
 
         LocalDate date = LocalDate.now();
@@ -175,10 +176,10 @@ public class AttendanceServiceImpl implements AttendanceService{
                 LocalDateTime.of(date,LocalTime.of(23,59)));
         List<StudentResponse> studentResponses = new ArrayList<>();
 
-        Integer lastAmount = attendanceRepository.countAllBy();
-        Integer todayAmount = attendanceRepository.findAllByDateTimeBetweenOrderByDateTimeDesc(
+        Integer todayAmount = attendanceRepository.countAllBy();
+        Integer lastAmount = attendanceRepository.countAllByDateTimeBetween(
                 LocalDateTime.of(startDate,LocalTime.of(0,0)),
-                LocalDateTime.of(todayDate.minusDays(1), LocalTime.of(23,59))).size();
+                now.minusDays(1));
 
         for(Student student : students) {
             for(Attendance attendance : attendanceList) {
@@ -200,8 +201,8 @@ public class AttendanceServiceImpl implements AttendanceService{
 
         return StudentGraphResponse.builder()
                 .studentResponses(studentResponses)
-                .lastDayGraph(lastAmount/21*dateSum)
-                .todayGraph(todayAmount/21*dateSum)
+                .lastDayGraph((lastAmount/21.0)*dateSum)
+                .todayGraph((todayAmount/21.0)*dateSum)
                 .build();
 
     }
