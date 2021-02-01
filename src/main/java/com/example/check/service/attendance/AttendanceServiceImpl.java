@@ -34,7 +34,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 
     LocalDateTime now = LocalDateTime.now();
     LocalDateTime startTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 5,30);
-    LocalDateTime endTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 12,2);
+    LocalDateTime endTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 8,2);
 
     @Override
     public void createAttendance() {
