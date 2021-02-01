@@ -181,8 +181,9 @@ public class AttendanceServiceImpl implements AttendanceService{
                 LocalDateTime.of(startDate,LocalTime.of(0,0)),
                 now.minusDays(1));
 
-        System.out.println(todayAmount);
+        System.out.println(dateSum);
         System.out.println(lastAmount);
+        System.out.println(todayAmount);
 
         for(Student student : students) {
             for(Attendance attendance : attendanceList) {
