@@ -181,6 +181,9 @@ public class AttendanceServiceImpl implements AttendanceService{
                 LocalDateTime.of(startDate,LocalTime.of(0,0)),
                 now.minusDays(1));
 
+        System.out.println(todayAmount);
+        System.out.println(lastAmount);
+
         for(Student student : students) {
             for(Attendance attendance : attendanceList) {
                 if (attendance.getStudent().equals(student)) {
@@ -201,8 +204,8 @@ public class AttendanceServiceImpl implements AttendanceService{
 
         return StudentGraphResponse.builder()
                 .studentResponses(studentResponses)
-                .lastDayGraph((lastAmount/21.0)*dateSum)
-                .todayGraph((todayAmount/21.0)*dateSum)
+                .lastDayGraph(lastAmount/(21.0*(dateSum-1)))
+                .todayGraph(todayAmount/(21.0*dateSum))
                 .build();
 
     }
