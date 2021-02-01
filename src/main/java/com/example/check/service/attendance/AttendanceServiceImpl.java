@@ -178,6 +178,7 @@ public class AttendanceServiceImpl implements AttendanceService{
                                 .build()
                 );
             }
+            isAttendance = false;
         }
 
         return studentResponses;
