@@ -33,10 +33,6 @@ public class AttendanceServiceImpl implements AttendanceService{
     private final AttendanceRepository attendanceRepository;
     private final StudentRepository studentRepository;
 
-    LocalDateTime now = LocalDateTime.now();
-    LocalDateTime startTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 5,30);
-    LocalDateTime endTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 8,2);
-
     @Override
     public void createAttendance() {
 
@@ -47,10 +43,18 @@ public class AttendanceServiceImpl implements AttendanceService{
         Student student = studentRepository.findById(authenticationFacade.getStudentId())
                 .orElseThrow(StudentNotFoundException::new);
 
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 5,30);
+        LocalDateTime endTime = LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(), 8,2);
+
         if(now.isBefore(startTime) || now.isAfter(endTime) ||
                 (now.getDayOfWeek().getValue() == 6 || now.getDayOfWeek().getValue() == 7)) {
             throw new AttendanceTimeException();
         }
+
+        System.out.println(now);
+
         if(!attendanceRepository.findAllByStudentAndDateTimeBetween(student,
                 LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(),0,0)
                 , LocalDateTime.of(now.getYear(),now.getMonth(),now.getDayOfMonth(),23,59)).isEmpty()) {
@@ -161,6 +165,7 @@ public class AttendanceServiceImpl implements AttendanceService{
         LocalDate tmp = LocalDate.of(2021,01,18);
         LocalDate todayDate = LocalDate.now();
         Integer dateSum = todayDate.getDayOfYear() - tmp.getDayOfYear() + 1;
+        LocalDateTime now = LocalDateTime.now();
 
         while(!tmp.isAfter(todayDate)) {
             if(tmp.getDayOfWeek().getValue() >= 6) {
@@ -180,10 +185,6 @@ public class AttendanceServiceImpl implements AttendanceService{
         Integer lastAmount = attendanceRepository.countAllByDateTimeBetween(
                 LocalDateTime.of(startDate,LocalTime.of(0,0)),
                 now.minusDays(1));
-
-        System.out.println(dateSum);
-        System.out.println(lastAmount);
-        System.out.println(todayAmount);
 
         for(Student student : students) {
             for(Attendance attendance : attendanceList) {
